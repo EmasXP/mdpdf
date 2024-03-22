@@ -44,33 +44,33 @@ const INDEX = `
 `
 
 func main() {
-	http.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request){
+	http.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, INDEX)
 	})
 
-	http.HandleFunc("POST /", func(w http.ResponseWriter, r *http.Request){
+	http.HandleFunc("POST /", func(w http.ResponseWriter, r *http.Request) {
 		command := exec.Command(
 			"pandoc",
-            "-f",
-            "gfm",
-            "--to",
-            "pdf",
-            "-V",
-            "papersize:a4",
-            "-V",
-            "pagestyle=empty",
-            "-V",
-            "linestretch=1.2",
-            "--template",
-            "template.latex",
-            "-V",
-            "fontsize:12pt",
-            "-V",
-            "documentclass=scrartcl",
-            "-V",
-            "mainfont=EB Garamond",
-            "--pdf-engine",
-            "xelatex",
+			"-f",
+			"gfm",
+			"--to",
+			"pdf",
+			"-V",
+			"papersize:a4",
+			"-V",
+			"pagestyle=empty",
+			"-V",
+			"linestretch=1.2",
+			"--template",
+			"template.latex",
+			"-V",
+			"fontsize:12pt",
+			"-V",
+			"documentclass=scrartcl",
+			"-V",
+			"mainfont=EB Garamond",
+			"--pdf-engine",
+			"xelatex",
 		)
 
 		md := r.PostFormValue("md")
