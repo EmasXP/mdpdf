@@ -28,10 +28,13 @@ $for(classoption)$
   $classoption$$sep$,
 $endfor$
 ]{$documentclass$}
+$if(large-h1)$
 \usepackage{sectsty}
 \sectionfont{\fontsize{21}{21}\selectfont}
-\pagenumbering{gobble}
-\addtokomafont{disposition}{\rmfamily}
+$endif$
+$if(preable)$
+$preable$
+$endif$
 $if(beamer)$
 $if(background-image)$
 \usebackgroundtemplate{%
