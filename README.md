@@ -4,13 +4,15 @@ This is just a personal project that I use to convert Markdown to PDF. It does t
 
 ## Installing the fonts
 
-If you don't already have EB Garamond 12 installed, go to this address https://github.com/octaviopardo/EBGaramond12/ and download the font files, preferably the OTF versions.
+If you don't already have EB Garamond 12 installed, go to this address https://github.com/octaviopardo/EBGaramond12/ and download the font files, preferably the OTF versions. The same thing goes for the JetBrains Mono NL, which can be downloaded here: https://www.jetbrains.com/lp/mono/
 
 You need to make sure that the fonts are accessible by the user that is running the service, and that's easiest by putting them in the `/usr/share/fonts` folder, for example:
 
 ```sh
 sudo mkdir /usr/share/fonts/EBGaramond12
 sudo mv EBGaramond-*.otf /usr/share/fonts/EBGaramond12/
+sudo mkdir /usr/share/fonts/JetBrainsMonoNL
+sudo mv JetBrainsMonoNL-*.ttf /usr/share/fonts/JetBrainsMonoNL/
 ```
 
 ## Starting the service

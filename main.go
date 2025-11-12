@@ -32,11 +32,20 @@ fontsize: 12pt
 linestretch: 1.2
 geometry: margin=6.25em
 header-includes:
+  # Remove page numbers on all pages:
   - \pagenumbering{gobble}
+  # Special title style:
   - \usepackage{titling}
   - \setlength{\droptitle}{-3.88em}
   - \pretitle{\fontsize{21}{21}\selectfont\bfseries}
   - \posttitle{\par\vspace{-3.1em}}
+  # Enable hyphenation:
+  - \usepackage[htt]{hyphenat}
+  - \usepackage[hyphens]{url}
+  - \usepackage{xurl}
+  # Enable code block line breaking:
+  - \usepackage{fvextra}
+  - \fvset{breaklines=true,breakanywhere=true}
 ---
 
 </textarea>
@@ -47,7 +56,7 @@ header-includes:
 			<h1>What's this?</h1>
 
 			<p>
-				This is just a web page to convert <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> into PDF. It does that using <a href="https://pandoc.org/">Pandoc</a> and the <a href="https://github.com/octaviopardo/EBGaramond12/">EB Garamond 12</a> font. Pandoc and LaTeX generates super crisp PDF files. Before I used this approach I converted the Markdown to HTML, and used a web browser to "print" the page to a PDF file. For some reason the fonts are rendered more blurry when taking that route.
+				This is just a web page to convert <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> into PDF. It does that using <a href="https://pandoc.org/">Pandoc</a> and the <a href="https://github.com/octaviopardo/EBGaramond12/">EB Garamond 12</a> font. The <a href="https://www.jetbrains.com/lp/mono/">JetBrains Mono NL</a> font is used for mono spaced text. Pandoc and LaTeX generates super crisp PDF files. Before I used this approach I converted the Markdown to HTML, and used a web browser to "print" the page to a PDF file. For some reason the fonts are rendered more blurry when taking that route.
 			</p>
 
 			<p>
@@ -71,7 +80,7 @@ header-includes:
 			<pre><code>---
 Meta data goes here
 ---
-	The document starts here.</code></pre>
+The document starts here.</code></pre>
 
 			<p>
 				I've added a predefined meta data block that I believe works well for Markdown files (at least, this is how I personally think the Markdown files should look when printed on paper.)
@@ -140,10 +149,39 @@ header-includes:
 - \pagenumbering{gobble}
 ---</code></pre>
 
+			<h3>Hyphenation</h3>
+
+			<p>
+				To enable hyphenation, add the following to the meta block:
+			</p>
+
+			<pre><code>---
+header-includes:
+  - \usepackage[htt]{hyphenat}
+  - \usepackage[hyphens]{url}
+  - \usepackage{xurl}
+---</code></pre>
+
+			<p>
+				This will also improve line breaking of URLs.
+			</p>
+
+			<h3>Code block line breaking</h3>
+
+			<p>
+				By default, code blocks do not break lines. To enable line breaking, add the following to the meta block:
+			</p>
+
+			<pre><code>---
+header-includes:
+  - \usepackage{fvextra}
+  - \fvset{breaklines=true,breakanywhere=true}
+---</code></pre>
+
 			<h3>More variables</h3>
 
 			<p>
-				More variables are found here: <a href="https://pandoc.org/chunkedhtml-demo/6.2-variables.html">https://pandoc.org/chunkedhtml-demo/6.2-variables.html</a>.
+				More variables are found here: <a href="https://pandoc.org/MANUAL.html#variables">https://pandoc.org/MANUAL.html#variables</a>.
 			</p>
 
 			<p>
@@ -224,7 +262,6 @@ func main() {
 }
 
 func cli(input, output, templatePath string) {
-	fmt.Println(templatePath)
 	command := exec.Command(
 		"pandoc",
 		input,
@@ -237,8 +274,8 @@ func cli(input, output, templatePath string) {
 		"pdf",
 		"--template",
 		templatePath,
-		"-V",
-		"mainfont=EB Garamond",
+		"-V", "mainfont=EB Garamond",
+		"-V", "monofont=JetBrains Mono NL",
 		// Trying out sans-serif fonts for a future sans-serif version:
 		//"mainfont=Inter",
 		//"mainfont=Carlito",
@@ -272,8 +309,8 @@ func web(templatePath string) {
 			"pdf",
 			"--template",
 			templatePath,
-			"-V",
-			"mainfont=EB Garamond",
+			"-V", "mainfont=EB Garamond",
+			"-V", "monofont=JetBrains Mono NL",
 			// Trying out sans-serif fonts for a future sans-serif version:
 			//"mainfont=Inter",
 			//"mainfont=Carlito",
