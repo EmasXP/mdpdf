@@ -11,6 +11,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 const INDEX = `
@@ -108,10 +109,10 @@ title: My document
 
 			<pre><code>---
 header-includes:
-- \usepackage{titling}
-- \setlength{\droptitle}{-3.88em}
-- \pretitle{\fontsize{21}{21}\selectfont\bfseries}
-- \posttitle{\par\vspace{-3.1em}}
+  - \usepackage{titling}
+  - \setlength{\droptitle}{-3.88em}
+  - \pretitle{\fontsize{21}{21}\selectfont\bfseries}
+  - \posttitle{\par\vspace{-3.1em}}
 ---</code></pre>
 
 			<p>
@@ -136,17 +137,6 @@ indent: true
 
 			<pre><code>---
 lang: en-GB
----</code></pre>
-
-			<h3>Removal of page numbers</h3>
-
-			<p>
-				When using <code>pagestyle: empty</code>, page numbers are removed. However, the first page will still have a page number. To remove that too, one can add the following:
-			</p>
-
-			<pre><code>---
-header-includes:
-- \pagenumbering{gobble}
 ---</code></pre>
 
 			<h3>Hyphenation</h3>
@@ -178,6 +168,28 @@ header-includes:
   - \fvset{breaklines=true,breakanywhere=true}
 ---</code></pre>
 
+			<h3>Author and date</h3>
+
+			<p>
+				To add author and/or date, use the <code>author</code> and <code>date</code> variables:
+			</p>
+
+			<pre><code>---
+author: Sam Doe
+date: {{date}}
+---</code></pre>
+
+			<h3>Removal of page numbers</h3>
+
+			<p>
+				When using <code>pagestyle: empty</code>, page numbers are removed. However, the first page will still have a page number. To remove that too, one can add the following:
+			</p>
+
+			<pre><code>---
+header-includes:
+  - \pagenumbering{gobble}
+---</code></pre>
+
 			<h3>More variables</h3>
 
 			<p>
@@ -185,7 +197,7 @@ header-includes:
 			</p>
 
 			<p>
-				The <code>mainfont</code> is hard-coded and cannot be changed.
+				The <code>mainfont</code> and <code>monofont</code> variables are hard-coded and cannot be changed.
 			</p>
 		</div>
 
@@ -296,7 +308,13 @@ func cli(input, output, templatePath string) {
 
 func web(templatePath string) {
 	http.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-		io.WriteString(w, INDEX)
+		index := strings.Replace(
+			INDEX,
+			"{{date}}",
+			time.Now().Format("2 January 2006"),
+			-1,
+		)
+		io.WriteString(w, index)
 	})
 
 	http.HandleFunc("POST /", func(w http.ResponseWriter, r *http.Request) {
