@@ -57,7 +57,7 @@ header-includes:
 			<h1>What's this?</h1>
 
 			<p>
-				This is just a web page to convert <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> into PDF. It does that using <a href="https://pandoc.org/">Pandoc</a> and the <a href="https://github.com/octaviopardo/EBGaramond12/">EB Garamond 12</a> font. The <a href="https://www.jetbrains.com/lp/mono/">JetBrains Mono NL</a> font is used for mono spaced text. Pandoc and LaTeX generates super crisp PDF files. Before I used this approach I converted the Markdown to HTML, and used a web browser to "print" the page to a PDF file. For some reason the fonts are rendered more blurry when taking that route.
+				This is just a web page to convert <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> into PDF. It does that using <a href="https://pandoc.org/">Pandoc</a> and the <a href="https://github.com/octaviopardo/EBGaramond12/">EB Garamond 12</a>, <a href="https://www.jetbrains.com/lp/mono/">JetBrains Mono NL</a> and <a href="https://rsms.me/inter/">Inter</a> fonts. Pandoc and LaTeX generates super crisp PDF files. Before I used this approach I converted the Markdown to HTML, and used a web browser to "print" the page to a PDF file. For some reason the fonts are rendered more blurry when taking that route.
 			</p>
 
 			<p>
@@ -190,6 +190,33 @@ header-includes:
   - \pagenumbering{gobble}
 ---</code></pre>
 
+			<h3>Document class</h3>
+
+			<p>
+				By default, the <code>article</code> document class is used. To change that, use the <code>documentclass</code> variable:
+			</p>
+
+			<pre><code>---
+documentclass: scrartcl
+---</code></pre>
+
+			<p>
+				Here are some common document classes:
+			</p>
+
+			<ul>
+				<li><code>article</code></li>
+				<li><code>scrartcl</code> (KOMA-Script article)</li>
+				<li><code>report</code></li>
+				<li><code>scrreprt</code> (KOMA-Script report)</li>
+				<li><code>book</code></li>
+				<li><code>scrbook</code> (KOMA-Script book)</li>
+			</ul>
+
+			<p>
+				The different document classes have different default behaviors, for example regarding chapter and section headings, but also margins, fonts, and more.
+			</p>
+
 			<h3>More variables</h3>
 
 			<p>
@@ -197,7 +224,7 @@ header-includes:
 			</p>
 
 			<p>
-				The <code>mainfont</code> and <code>monofont</code> variables are hard-coded and cannot be changed.
+				The <code>mainfont</code> and <code>monofont</code> and <code>sansfont</code> variables are hard-coded and cannot be changed.
 			</p>
 		</div>
 
@@ -288,9 +315,7 @@ func cli(input, output, templatePath string) {
 		templatePath,
 		"-V", "mainfont=EB Garamond",
 		"-V", "monofont=JetBrains Mono NL",
-		// Trying out sans-serif fonts for a future sans-serif version:
-		//"mainfont=Inter",
-		//"mainfont=Carlito",
+		"-V", "sansfont=Inter",
 		"--pdf-engine",
 		"xelatex",
 	)
@@ -329,9 +354,7 @@ func web(templatePath string) {
 			templatePath,
 			"-V", "mainfont=EB Garamond",
 			"-V", "monofont=JetBrains Mono NL",
-			// Trying out sans-serif fonts for a future sans-serif version:
-			//"mainfont=Inter",
-			//"mainfont=Carlito",
+			"-V", "sansfont=Inter",
 			"--pdf-engine",
 			"xelatex",
 		)

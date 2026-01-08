@@ -1,10 +1,14 @@
 # mdpdf
 
-This is just a personal project that I use to convert Markdown to PDF. It does that using Pandoc and the EB Garamond 12 font. It generates high quality PDF files due to this approach, simply because Pandoc and LaTeX are awesome.
+This is just a personal project that I use to convert Markdown to PDF. It does that using Pandoc and the EB Garamond 12, JetBrains Mono NL and Inter fonts. It generates high quality PDF files due to this approach, simply because Pandoc and LaTeX are awesome.
 
 ## Installing the fonts
 
-If you don't already have EB Garamond 12 installed, go to this address https://github.com/octaviopardo/EBGaramond12/ and download the font files, preferably the OTF versions. The same thing goes for the JetBrains Mono NL, which can be downloaded here: https://www.jetbrains.com/lp/mono/
+If you don't already have the fonts installed, download them from these addresses:
+
+* EB Garamond 12: https://github.com/octaviopardo/EBGaramond12/ (preferably the OTF versions) 
+* JetBrains Mono NL: https://www.jetbrains.com/lp/mono/
+* Inter: https://rsms.me/inter/
 
 You need to make sure that the fonts are accessible by the user that is running the service, and that's easiest by putting them in the `/usr/share/fonts` folder, for example:
 
@@ -13,6 +17,8 @@ sudo mkdir /usr/share/fonts/EBGaramond12
 sudo mv EBGaramond-*.otf /usr/share/fonts/EBGaramond12/
 sudo mkdir /usr/share/fonts/JetBrainsMonoNL
 sudo mv JetBrainsMonoNL-*.ttf /usr/share/fonts/JetBrainsMonoNL/
+sudo mkdir /usr/share/fonts/Inter
+sudo mv Inter-*.otf /usr/share/fonts/Inter/
 ```
 
 ## Starting the service
@@ -84,3 +90,8 @@ To specify the output file:
 mdpdf my-document.md output-file.pdf
 ```
 
+## About a future sans-serif version
+
+It's not very likely that this is ever going to happen. The typeface picks are _very_ opinionated, but it does not hurt to at least think about it.
+
+The currently used sans-serif typeface is Inter, which render itself beautifully on headings and titles. In my personal opinion, it does not render itself as pretty on long text. I think we're better off with Carlito (or possibly Lato) in that case. Combining Inter (headings, titles) with Carlito or Lato (paragraphs) does not sound exciting to me, though.
